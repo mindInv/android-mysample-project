@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+	<PreferenceCategory android:title="GPS受信設定">
+		<EditTextPreference
+		    android:key="MIN_TIME"
+		    android:title="更新最小時間"
+		    android:summary="0 - [ms]単位で指定"
+		    android:dialogTitle="更新最小時間"
+		/>
+		<EditTextPreference 
+    		android:key="MIN_DISTANCE" 
+		    android:title="更新最小距離" 
+		    android:summary="0 - [m]単位で指定"
+		    android:dialogTitle="更新最小距離"
+		/>
+	</PreferenceCategory>
+</PreferenceScreen>
