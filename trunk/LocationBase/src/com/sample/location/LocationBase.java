@@ -1,6 +1,5 @@
 package com.sample.location;
 
-import com.google.android.maps.GeoPoint;
 import com.google.android.maps.MapActivity;
 import com.google.android.maps.MapView;
 import com.google.android.maps.MyLocationOverlay;
@@ -110,6 +109,8 @@ public class LocationBase extends MapActivity implements LocationListener {
 	public boolean onMenuItemSelected(int featureId, MenuItem item) {
 		switch ( item.getItemId() ) {
 			case MENU_MYLOCATION:
+				// 現在地を更新して中心に移動する
+				mMap.getController().animateTo(mMyLocationOverlay.getMyLocation());
 				mMylocStatus = true;
 				return true;
 			case MENU_INTERVAL:
@@ -140,7 +141,7 @@ public class LocationBase extends MapActivity implements LocationListener {
 	}
 
 	public void onLocationChanged(Location loc) {
-		Toast.makeText(this, "Loc Changed", Toast.LENGTH_SHORT);
+//		Toast.makeText(this, "Loc Changed", Toast.LENGTH_SHORT).show();
 		if ( !mMylocStatus ) {
 			return;
 		}
