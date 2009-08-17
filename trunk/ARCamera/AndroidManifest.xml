@@ -14,10 +14,22 @@
             </intent-filter>
         </activity>
 
+        <!-- Camera MapView -->
+        <activity android:name="net.android.sample.cameramap.CameraMapView"
+                  android:label="Camera MapView"
+                  android:configChanges="orientation|keyboardHidden"
+                  android:taskAffinity=".mapview">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        
         <!-- Camera Map -->
         <activity android:name="net.android.sample.cameramap.CameraMap"
                   android:label="Camera Map"
-                  android:screenOrientation="landscape">
+                  android:screenOrientation="landscape"
+                  android:taskAffinity=".cameraview">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.DEFAULT" />
