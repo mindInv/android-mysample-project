@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    >
+<Button
+	android:id="@+id/cameraMap"
+	android:layout_width="200px"
+    android:layout_height="wrap_content" 
+    android:text="Camera Map"
+   	android:layout_gravity="center_horizontal" 
+    android:layout_marginTop="50px"
+    />
+<Button
+	android:id="@+id/imageViewer"
+	android:layout_width="200px"
+    android:layout_height="wrap_content" 
+    android:text="Image Viewer"
+   	android:layout_gravity="center_horizontal" 
+    android:layout_marginTop="30px"
+    />
+<Button
+	android:id="@+id/wikitude"
+	android:layout_width="200px"
+    android:layout_height="wrap_content" 
+    android:text="View Wikitude"
+   	android:layout_gravity="center_horizontal" 
+    android:layout_marginTop="30px"
+    />
+</LinearLayout>
