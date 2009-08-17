@@ -1,13 +1,11 @@
 package net.android.sample.cameramap;
 
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.util.Calendar;
 import com.google.android.maps.GeoPoint;
 import android.content.ContentResolver;
 import android.content.ContentValues;
-import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.hardware.Camera;
@@ -26,7 +24,6 @@ public class CameraView extends SurfaceView implements Callback {
 	private Camera camera;
 	private CameraMap ar;
 	private static ContentResolver contentResolver = null;
-	private static final String SD_CARD = "/sdcard";
 	private int lat = 0;
 	private int lng = 0;
 	
@@ -111,7 +108,7 @@ public class CameraView extends SurfaceView implements Callback {
 		});
 	}
 
-	// BitmapをSDCARDに保存する
+	// 画像をSDCARDに保存する
 	protected void saveDataToSdCard(byte[] data, String dataName) {
 		Bitmap bitmap = BitmapFactory.decodeByteArray(data, 0, data.length);
 		ContentValues values = new ContentValues();

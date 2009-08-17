@@ -3,6 +3,7 @@ package net.android.sample.cameramap;
 import java.util.ArrayList;
 import java.util.List;
 
+import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Point;
 import android.graphics.drawable.Drawable;
@@ -18,13 +19,13 @@ public class ImagePointOverlay extends ItemizedOverlay<OverlayItem> {
 	private static final int UNKOWN_INDEX = -1;
 	private List<OverlayItem> items = new ArrayList<OverlayItem>();
 	private OverlayItem selectedItem;
-	private CameraMap mCameraMap;
+	private CameraMapView mContext;
 	private int mSelectedIndex = UNKOWN_INDEX;
 	
-	public ImagePointOverlay(Drawable defaultMarker, CameraMap context) {
+	public ImagePointOverlay(Drawable defaultMarker, CameraMapView context) {
 		super(defaultMarker);
 		
-		this.mCameraMap = context;
+		this.mContext = context;
 		
 		populate();
 	}
@@ -60,7 +61,7 @@ public class ImagePointOverlay extends ItemizedOverlay<OverlayItem> {
 		super.draw(canvas, mapView, shadow);
 		
 		if ( !shadow && mSelectedIndex != UNKOWN_INDEX ) {
-			mCameraMap.popImageView(mSelectedIndex);
+			mContext.popImageView(mSelectedIndex);
 			mSelectedIndex = UNKOWN_INDEX;
 		}
 	}	
