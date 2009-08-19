@@ -13,6 +13,8 @@ import android.os.Bundle;
 import android.provider.MediaStore;
 import android.provider.MediaStore.Images.Media;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
@@ -26,7 +28,6 @@ import android.widget.EditText;
 import android.widget.Gallery;
 import android.widget.ImageSwitcher;
 import android.widget.ImageView;
-import android.widget.Toast;
 import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ViewSwitcher.ViewFactory;
 
@@ -72,14 +73,11 @@ public class ImageViewer extends Activity implements OnItemSelectedListener, Vie
         i.setLayoutParams(new ImageSwitcher.LayoutParams(LayoutParams.FILL_PARENT, LayoutParams.FILL_PARENT));
         i.setOnClickListener(new OnClickListener() {
 			public void onClick(View v) {
-				Log.i("Image", "ID = " + mPosition);
 				mCursor.moveToPosition(mPosition);
 				int lat = (int)( mCursor.getDouble(mCursor.getColumnIndex(Media.LATITUDE)) );
-				int lng = (int)( mCursor.getDouble(mCursor.getColumnIndex(Media.LONGITUDE)) );
-				Toast.makeText(ImageViewer.this, "LOC: " + lat + ", " + lng, Toast.LENGTH_LONG).show();
-				
+				int lng = (int)( mCursor.getDouble(mCursor.getColumnIndex(Media.LONGITUDE)) );				
 				Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("geo:" + lat/1E6 + "," + lng/1E6));
-				startActivity(intent);
+				startActivityForResult(intent, 0);
 			}        	
         });
         i.setOnLongClickListener(new OnLongClickListener() {
@@ -149,7 +147,7 @@ public class ImageViewer extends Activity implements OnItemSelectedListener, Vie
         }
     }
 
-    @Override
+	@Override
 	protected void onStart() {
 		super.onStart();
 
@@ -173,4 +171,18 @@ public class ImageViewer extends Activity implements OnItemSelectedListener, Vie
         g.setAdapter(new ImageAdapter(this));
         g.setOnItemSelectedListener(this);
     }
+
+    @Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+    	menu.add(0, 0, 0, "CameraMap");
+		return super.onCreateOptionsMenu(menu);
+	}
+
+	@Override
+	public boolean onMenuItemSelected(int featureId, MenuItem item) {
+		Intent intent = new Intent();
+		intent.setClassName(this, "net.android.sample.imageviewer.CameraMapView");
+		startActivity(intent);
+		return true;
+	}
 }
