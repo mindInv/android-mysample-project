@@ -1,5 +1,8 @@
 package net.android.sample.cameramap;
 
+import net.android.sample.imageviewer.CameraMapView;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.widget.LinearLayout;
 
 public class CameraMap extends CameraMapView {
@@ -16,5 +19,15 @@ public class CameraMap extends CameraMapView {
 	@Override
 	protected int setZoomLevel() {
 		return 17;
-	}   
+	}
+	
+    @Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		return true;
+	}
+
+	@Override
+	public boolean onMenuItemSelected(int featureId, MenuItem item) {
+		return true;
+	}
 }

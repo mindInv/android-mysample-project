@@ -8,7 +8,7 @@
 	android:id="@+id/cameraMap"
 	android:layout_width="200px"
     android:layout_height="wrap_content" 
-    android:text="Camera Map"
+    android:text="Camera View"
    	android:layout_gravity="center_horizontal" 
     android:layout_marginTop="50px"
     />
@@ -16,7 +16,7 @@
 	android:id="@+id/imageViewer"
 	android:layout_width="200px"
     android:layout_height="wrap_content" 
-    android:text="Image Viewer"
+    android:text="Map/Image Viewer"
    	android:layout_gravity="center_horizontal" 
     android:layout_marginTop="30px"
     />

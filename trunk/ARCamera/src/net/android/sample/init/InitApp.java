@@ -28,13 +28,13 @@ public class InitApp extends Activity implements OnClickListener {
 
 	public void onClick(View v) {
 		Intent intent = new Intent();
+		intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+
 		if ( v == cameraBtn ) {
-//			intent.setClassName(this, "net.android.sample.cameramap.CameraMapView");
 			intent.setClassName(this, "net.android.sample.cameramap.CameraMap");
-			intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 			startActivity(intent);
 		} else if ( v == imageViewer ) {
-			intent.setClassName(this, "net.android.sample.imageviewer.ImageViewer");
+			intent.setClassName(this, "net.android.sample.imageviewer.CameraMapView");
 			startActivity(intent);
 		} else if ( v == wikitude ) {
 			intent.setClassName(this, "net.android.sample.wikitude.WikitudeViewer");

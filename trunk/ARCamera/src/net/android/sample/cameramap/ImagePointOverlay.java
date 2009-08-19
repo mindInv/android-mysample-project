@@ -3,6 +3,8 @@ package net.android.sample.cameramap;
 import java.util.ArrayList;
 import java.util.List;
 
+import net.android.sample.imageviewer.CameraMapView;
+
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Point;
