@@ -63,6 +63,7 @@ public class MyView extends View {
 
 		// ターゲットとの距離と方角
 		canvas.drawText("富士山まで " + distanceString + " km", 20, 100, textPaint);
+		// Bearingは動作を検証していない・・・
 		canvas.drawText("富士山の方角 " + bearingString, 20, 120, textPaint);
 	      
 		String orientation = new String();
