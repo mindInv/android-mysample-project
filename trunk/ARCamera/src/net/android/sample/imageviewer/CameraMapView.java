@@ -29,7 +29,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
-public class CameraMapView extends MapActivity implements LocationListener {
+public class CameraMapView extends MapActivity implements LocationListener, PopImageListener {
 	
 	private static final int MYLOCATION_ID = 0;
 	private static final int IMAGEVIEW_ID = 1;
@@ -55,9 +55,6 @@ public class CameraMapView extends MapActivity implements LocationListener {
         LinearLayout layout= new LinearLayout(this);
         layout.setBackgroundColor(Color.BLACK);
         setContentView(layout);
-
-        // カメラビューの生成
-        cameraViewBuilder(layout);
         
     	// ロケーションマネージャの取得
     	mLocManager = (LocationManager)getSystemService(Context.LOCATION_SERVICE);
@@ -70,7 +67,7 @@ public class CameraMapView extends MapActivity implements LocationListener {
                 LinearLayout.LayoutParams.WRAP_CONTENT));
         mMap.setBuiltInZoomControls(true);
         // ズームレベルの初期設定
-        mMap.getController().setZoom(setZoomLevel());
+        mMap.getController().setZoom(15);
         mMap.setClickable(true);
        
         // 現在地オーバーレイの生成
@@ -93,14 +90,6 @@ public class CameraMapView extends MapActivity implements LocationListener {
         // 地図上の画像の位置を取得する
         getImageMaps();
     }
-
-    protected int setZoomLevel() {
-		return 15;
-	}
-
-	// カメラビューの生成
-    protected void cameraViewBuilder(LinearLayout layout) {
-	}
 
 	public GeoPoint getLocation() {
         return new GeoPoint( now_lat, now_lng );
