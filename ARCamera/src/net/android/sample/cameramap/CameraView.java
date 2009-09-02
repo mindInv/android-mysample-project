@@ -11,12 +11,10 @@ import android.graphics.BitmapFactory;
 import android.hardware.Camera;
 import android.net.Uri;
 import android.provider.MediaStore.Images.Media;
-import android.util.Log;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.SurfaceHolder.Callback;
-import android.widget.Toast;
 
 public class CameraView extends SurfaceView implements Callback {
 
@@ -49,7 +47,6 @@ public class CameraView extends SurfaceView implements Callback {
 			int height) {
 		// カメラのプレビュー開始
 		Camera.Parameters parameters = camera.getParameters();
-		Log.i("WH", "W = " + width + "," + " H = " + height);
 		parameters.setPreviewSize(width, height);
 		parameters.setPictureSize(640, 480); // VGA Size
 		camera.setParameters(parameters);
@@ -84,9 +81,10 @@ public class CameraView extends SurfaceView implements Callback {
 			lat = geo.getLatitudeE6();
 			lng = geo.getLongitudeE6();
 			takePicture();
-			Toast.makeText(ar, "LOC:" + lat + "," + lng, Toast.LENGTH_LONG).show();
 			// 現在地にポイントを追加
 			ar.addImagePoint(lat, lng);
+			// Twitterに送る
+			ar.sendTwitter(lat, lng);
 			// カメラを再スタート
 			camera.startPreview();
 		}

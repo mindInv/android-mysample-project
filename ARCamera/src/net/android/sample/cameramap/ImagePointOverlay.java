@@ -2,16 +2,9 @@ package net.android.sample.cameramap;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import net.android.sample.imageviewer.CameraMapView;
-
-import android.content.Context;
+import net.android.sample.imageviewer.PopImageListener;
 import android.graphics.Canvas;
-import android.graphics.Point;
 import android.graphics.drawable.Drawable;
-import android.util.Log;
-
-import com.google.android.maps.GeoPoint;
 import com.google.android.maps.ItemizedOverlay;
 import com.google.android.maps.MapView;
 import com.google.android.maps.OverlayItem;
@@ -21,13 +14,13 @@ public class ImagePointOverlay extends ItemizedOverlay<OverlayItem> {
 	private static final int UNKOWN_INDEX = -1;
 	private List<OverlayItem> items = new ArrayList<OverlayItem>();
 	private OverlayItem selectedItem;
-	private CameraMapView mContext;
+	private PopImageListener listener;
 	private int mSelectedIndex = UNKOWN_INDEX;
 	
-	public ImagePointOverlay(Drawable defaultMarker, CameraMapView context) {
+	public ImagePointOverlay(Drawable defaultMarker, PopImageListener listener) {
 		super(defaultMarker);
 		
-		this.mContext = context;
+		this.listener = listener;
 		
 		populate();
 	}
@@ -58,12 +51,11 @@ public class ImagePointOverlay extends ItemizedOverlay<OverlayItem> {
 		return false;
 	}
 
-	@Override
 	public void draw(Canvas canvas, MapView mapView, boolean shadow) {
 		super.draw(canvas, mapView, shadow);
 		
 		if ( !shadow && mSelectedIndex != UNKOWN_INDEX ) {
-			mContext.popImageView(mSelectedIndex);
+			listener.popImageView(mSelectedIndex);
 			mSelectedIndex = UNKOWN_INDEX;
 		}
 	}	
