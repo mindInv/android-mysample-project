@@ -25,6 +25,8 @@ import android.location.LocationListener;
 import android.location.LocationManager;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.PowerManager;
+import android.os.PowerManager.WakeLock;
 import android.provider.MediaStore;
 import android.provider.MediaStore.Images.Media;
 import android.view.MotionEvent;
@@ -59,6 +61,9 @@ public class CameraMap extends MapActivity implements LocationListener, PopImage
     private CameraView mCamera = null;
 	private CameraOverlayView mOverlay = null;
 
+	// WakeLock
+	private WakeLock mWakeLock;
+	
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -76,6 +81,8 @@ public class CameraMap extends MapActivity implements LocationListener, PopImage
     	mLocManager = (LocationManager)getSystemService(Context.LOCATION_SERVICE);
         // センサーマネージャの取得
         mSensorManager = (SensorManager)getSystemService(Context.SENSOR_SERVICE);
+        // WakeLockの取得
+        mWakeLock = ((PowerManager)getSystemService(Context.POWER_SERVICE)).newWakeLock(PowerManager.SCREEN_BRIGHT_WAKE_LOCK, "CAMERA_LOCK");
 
     	// マップビューの生成
         mMap = new MapView(this, "0Y_VNXj7CxhvaJSe0hdIijkxS2G2_nEtWhFfNMA");
@@ -137,12 +144,17 @@ public class CameraMap extends MapActivity implements LocationListener, PopImage
 		}
         
         // 現在地表示を有効にする
-        mMyLocationOverlay.enableMyLocation();    
+        mMyLocationOverlay.enableMyLocation();
+
+        // wakelockを取得
+        mWakeLock.acquire();
     }	
 
     @Override
     protected void onPause() {
     	super.onPause();
+    	// wakelockを解放
+    	mWakeLock.release();
     	// 現在地表示を無効にする
         mMyLocationOverlay.disableMyLocation();
         mLocManager.removeUpdates(this);
