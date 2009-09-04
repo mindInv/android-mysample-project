@@ -43,12 +43,11 @@ public class CameraView extends SurfaceView implements Callback {
 	}
 
 	// サーフェス変更イベントの処理
-	public void surfaceChanged(SurfaceHolder holder, int format, int width,
-			int height) {
+	public void surfaceChanged(SurfaceHolder holder, int format, int width, int height) {
 		// カメラのプレビュー開始
 		Camera.Parameters parameters = camera.getParameters();
 		parameters.setPreviewSize(width, height);
-		parameters.setPictureSize(640, 480); // VGA Size
+		parameters.setPictureSize(800, 600); // WVGA Size
 		camera.setParameters(parameters);
 		camera.startPreview();
 	}
@@ -60,7 +59,6 @@ public class CameraView extends SurfaceView implements Callback {
 			camera = Camera.open();
 			camera.setPreviewDisplay(holder);
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
