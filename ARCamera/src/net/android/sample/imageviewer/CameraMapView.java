@@ -80,7 +80,7 @@ public class CameraMapView extends MapActivity implements LocationListener, PopI
         mMap.getOverlays().add(mMyLocationOverlay);
       
         // 画像オーバーレイの生成
-        Drawable marker = getResources().getDrawable(R.drawable.red_pin);
+        Drawable marker = getResources().getDrawable(R.drawable.blupushpin);
         marker.setBounds(0, 0, marker.getIntrinsicWidth(), marker.getIntrinsicHeight());
         mImagePointOverlay = new ImagePointOverlay(marker, this);
         mMap.getOverlays().add(mImagePointOverlay);
