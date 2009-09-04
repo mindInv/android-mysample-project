@@ -1,6 +1,8 @@
 package net.android.sample.cameramap;
 
 import java.util.List;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 import net.android.sample.imageviewer.PopImageListener;
 import net.android.sample.init.R;
 import net.android.sample.lib.Shortto;
@@ -63,6 +65,9 @@ public class CameraMap extends MapActivity implements LocationListener, PopImage
 
 	// WakeLock
 	private WakeLock mWakeLock;
+	
+	// Twitterへ投げるためのオブジェクト
+	private ExecutorService mExecutor = Executors.newFixedThreadPool(1);
 	
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -249,17 +254,28 @@ public class CameraMap extends MapActivity implements LocationListener, PopImage
 	}
 	
 	public void sendTwitter(int lat, int lng) {
-		String url = "http://maps.google.com/maps?q=" + (float)lat/1E6 + "," + (float)lng/1E6;
-		Shortto.getShortUrl(url);
-        
-		// Twidroidにメッセージを送信
-		Intent intent = new Intent("com.twidroid.SendTweet");
-        intent.putExtra("com.twidroid.extra.MESSAGE", "Taken photo at L:" + Shortto.getShortUrl(url) + " photo ");
-        try {
-        	startActivityForResult(intent, 1);
-        } catch (ActivityNotFoundException e) {
-        	/* Handle Exception if Twidroid is not installed */
-        	Toast.makeText(this, "Twidroid Application not found.", Toast.LENGTH_LONG);
-        }
+		mExecutor.execute(new SendTwitterTask(lat, lng));
+	}	
+
+	private class SendTwitterTask implements Runnable {
+		private String url;
+		
+		SendTwitterTask(int lat, int lng) {
+			this.url = "http://maps.google.com/maps?q=" + (float)lat/1E6 + "," + (float)lng/1E6;
+		}
+		
+		public void run() {
+			// URL Short
+			Shortto.getShortUrl(url);
+			// Twidroidにメッセージを送信
+			Intent intent = new Intent("com.twidroid.SendTweet");
+	        intent.putExtra("com.twidroid.extra.MESSAGE", "Taken photo at L:" + Shortto.getShortUrl(url) + " photo ");
+	        try {
+	        	startActivityForResult(intent, 1);
+	        } catch (ActivityNotFoundException e) {
+	        	/* Handle Exception if Twidroid is not installed */
+	        	Toast.makeText(CameraMap.this, "Twidroid Application not found.", Toast.LENGTH_LONG);
+	        }
+		}
 	}	
 }
