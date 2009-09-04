@@ -18,7 +18,7 @@ public class ImagePointOverlay extends ItemizedOverlay<OverlayItem> {
 	private int mSelectedIndex = UNKOWN_INDEX;
 	
 	public ImagePointOverlay(Drawable defaultMarker, PopImageListener listener) {
-		super(defaultMarker);
+		super(boundCenterBottom(defaultMarker));
 		
 		this.listener = listener;
 		

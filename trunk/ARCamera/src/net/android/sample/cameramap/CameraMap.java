@@ -105,7 +105,7 @@ public class CameraMap extends MapActivity implements LocationListener, PopImage
         mMap.getOverlays().add(mMyLocationOverlay);
       
         // 画像オーバーレイの生成
-        Drawable marker = getResources().getDrawable(R.drawable.red_pin);
+        Drawable marker = getResources().getDrawable(R.drawable.blupushpin);
         marker.setBounds(0, 0, marker.getIntrinsicWidth(), marker.getIntrinsicHeight());
         mImagePointOverlay = new ImagePointOverlay(marker, this);
         mMap.getOverlays().add(mImagePointOverlay);
@@ -254,7 +254,7 @@ public class CameraMap extends MapActivity implements LocationListener, PopImage
         
 		// Twidroidにメッセージを送信
 		Intent intent = new Intent("com.twidroid.SendTweet");
-        intent.putExtra("com.twidroid.extra.MESSAGE", "Taken photo at " + Shortto.getShortUrl(url) + " photo ");
+        intent.putExtra("com.twidroid.extra.MESSAGE", "Taken photo at L:" + Shortto.getShortUrl(url) + " photo ");
         try {
         	startActivityForResult(intent, 1);
         } catch (ActivityNotFoundException e) {
