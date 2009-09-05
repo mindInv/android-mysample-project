@@ -269,7 +269,7 @@ public class CameraMap extends MapActivity implements LocationListener, PopImage
 			Shortto.getShortUrl(url);
 			// Twidroidにメッセージを送信
 			Intent intent = new Intent("com.twidroid.SendTweet");
-	        intent.putExtra("com.twidroid.extra.MESSAGE", "Taken photo at L:" + Shortto.getShortUrl(url) + " photo ");
+	        intent.putExtra("com.twidroid.extra.MESSAGE", " L: " + Shortto.getShortUrl(url) + " photo ");
 	        try {
 	        	startActivityForResult(intent, 1);
 	        } catch (ActivityNotFoundException e) {
