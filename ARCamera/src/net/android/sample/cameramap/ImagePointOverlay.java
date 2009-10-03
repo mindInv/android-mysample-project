@@ -55,8 +55,10 @@ public class ImagePointOverlay extends ItemizedOverlay<OverlayItem> {
 		super.draw(canvas, mapView, shadow);
 		
 		if ( !shadow && mSelectedIndex != UNKOWN_INDEX ) {
-			listener.popImageView(mSelectedIndex);
+			int lat = items.get(mSelectedIndex).getPoint().getLatitudeE6();
+			int lng = items.get(mSelectedIndex).getPoint().getLongitudeE6();
+			listener.popImageView(mSelectedIndex, lat, lng);
 			mSelectedIndex = UNKOWN_INDEX;
 		}
-	}	
+	}
 }

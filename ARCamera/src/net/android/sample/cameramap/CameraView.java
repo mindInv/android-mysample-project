@@ -82,7 +82,7 @@ public class CameraView extends SurfaceView implements Callback {
 			// 現在地にポイントを追加
 			ar.addImagePoint(lat, lng);
 			// Twitterに送る
-			ar.sendTwitter(lat, lng);
+//			ar.sendTwitter(lat, lng); なぜか1.6で動かなくなった
 			// カメラを再スタート
 			camera.startPreview();
 		}

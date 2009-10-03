@@ -231,7 +231,7 @@ public class CameraMap extends MapActivity implements LocationListener, PopImage
 	public void onStatusChanged(String arg0, int arg1, Bundle arg2) {
 	}
 
-	public void popImageView(int index) {
+	public void popImageView(int index, int lat, int lng) {
 	    final AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);        
 	    ImageView image = new ImageView(this);
 	    image.setImageURI(mUriIds[index]);
