@@ -1,14 +1,18 @@
 package net.android.sample.imageviewer;
 
 import java.util.StringTokenizer;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 import net.android.sample.cameramap.ImagePointOverlay;
 import net.android.sample.init.R;
+import net.android.sample.lib.Shortto;
 import com.google.android.maps.GeoPoint;
 import com.google.android.maps.MapActivity;
 import com.google.android.maps.MapView;
 import com.google.android.maps.MyLocationOverlay;
 import com.google.android.maps.OverlayItem;
 import android.app.AlertDialog;
+import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
@@ -21,10 +25,13 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.provider.MediaStore.Images.Media;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
+import android.view.View;
 import android.view.Window;
+import android.view.View.OnClickListener;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Toast;
@@ -220,17 +227,52 @@ public class CameraMapView extends MapActivity implements LocationListener, PopI
             addImagePoint(lat, lng);
         }
     }
-    
-    public void popImageView(int index) {
+  
+	// Twitterへ投げるためのオブジェクト
+	ExecutorService mExecutor = Executors.newFixedThreadPool(1);
+
+	public void popImageView(int index, final int lat, final int lng) {
 	    final AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);        
 	    ImageView image = new ImageView(this);
 	    image.setImageURI(mUriIds[index]);
-	    
+	    image.setOnClickListener(new OnClickListener() {
+			public void onClick(View v) {
+				sendTwitter(lat, lng);
+				Toast.makeText(CameraMapView.this, "Twidroid起動中", Toast.LENGTH_SHORT).show();
+			}
+	    });
 	    // タイトルを設定
 	    alertDialogBuilder.setTitle(mTitles[index]);
  	    // Imageを表示
 	    alertDialogBuilder.setView(image);
 	    // ダイアログを表示
 	    alertDialogBuilder.create().show();     
+    
     }
+    
+	public void sendTwitter(int lat, int lng) {
+		mExecutor.execute(new SendTwitterTask(lat, lng));
+	}	
+
+	private class SendTwitterTask implements Runnable {
+		private String url;
+		
+		SendTwitterTask(int lat, int lng) {
+			this.url = "http://maps.google.com/maps?q=" + (float)lat/1E6 + "," + (float)lng/1E6;
+		}
+		
+		public void run() {
+			// URL Short
+			Shortto.getShortUrl(url);
+			// Twidroidにメッセージを送信
+			Intent intent = new Intent("com.twidroid.SendTweet");
+	        intent.putExtra("com.twidroid.extra.MESSAGE", " L: " + Shortto.getShortUrl(url) + " photo ");
+	        try {
+	        	startActivityForResult(intent, 1);
+	        } catch (ActivityNotFoundException e) {
+	        	/* Handle Exception if Twidroid is not installed */
+	        	Toast.makeText(CameraMapView.this, "Twidroid Application not found.", Toast.LENGTH_LONG);
+	        }
+		}
+	}
 }
